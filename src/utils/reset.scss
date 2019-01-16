@@ -1,0 +1,39 @@
+body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,
+form,fieldset,legend,button,input,textarea,th,td  {margin:0;padding:0;}
+
+h1,h2,h3,h4,h5,h6{font-size:100%;}
+
+
+ul,ol{list-style:none;}
+
+a{text-decoration:none;color: #3a3a3a;}
+
+a:hover{text-decoration:none;}
+
+body{
+  max-width: 768px;
+  background: #fff;
+  color: #000000;
+  overflow: hidden;
+}
+
+.clearfix:after {
+  display: block;
+  height: 0;
+  content: '';
+  clear: both;
+  visibility: hidden;
+}
+
+.pull-left {
+  float: left;
+}
+
+.pull-right {
+  float: right;
+}
+
+@font-face{
+  font-family: 'wxFont';
+  src: url('../static/font/font.ttf')
+}
