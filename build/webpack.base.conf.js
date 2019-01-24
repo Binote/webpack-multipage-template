@@ -1,45 +1,45 @@
-const path = require("path");
+const path = require('path')
 
 module.exports = {
-  context: path.resolve(__dirname, "./"),
+  context: path.resolve(__dirname, './'),
   output: {
-    path: path.resolve(__dirname, "../dist"),
-    filename: "js/[name].[hash:8].js",
-    publicPath: "./",
-    libraryTarget: "umd"
+    path: path.resolve(__dirname, '../dist'),
+    filename: 'js/[name].[hash:8].js',
+    publicPath: './',
+    libraryTarget: 'umd'
   },
   module: {
     rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        enforce: "pre",
+        enforce: 'pre',
         use: [
           {
-            loader: "babel-loader"
+            loader: 'babel-loader'
           }
         ]
       },
       {
         test: /\.html$/,
-        loader: "html-loader"
+        loader: 'html-loader'
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-        loader: "url-loader",
+        loader: 'url-loader',
         options: {
           limit: 10000,
-          name: "img/[name].[hash:7].[ext]"
+          name: 'img/[name].[hash:7].[ext]'
         }
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        loader: "url-loader",
+        loader: 'url-loader',
         options: {
           limit: 10000,
-          name: "fonts/[name].[hash:7].[ext]"
+          name: 'fonts/[name].[hash:7].[ext]'
         }
       }
     ]
   }
-};
+}
