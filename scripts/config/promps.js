@@ -33,7 +33,7 @@ module.exports = {
         value: 'test'
       },
       {
-        name: ' build:改变了build工具 如 grunt换成了 npm',
+        name: 'build:改变了build工具 如 grunt换成了 npm',
         value: 'build'
       },
       {
