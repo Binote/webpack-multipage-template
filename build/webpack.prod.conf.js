@@ -1,10 +1,10 @@
 // const webpack = require('webpack')
 const merge = require('webpack-merge')
-const path = require('path')
+// const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-// const HtmlWebpackPlugin = require("html-webpack-plugin");
+const config = require('../config')
 const autoprefixer = require('autoprefixer')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+// const CleanWebpackPlugin = require('clean-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const WebpackConf = require('./webpack.base.conf')
@@ -14,15 +14,20 @@ const HTMLPlugins = entryHtmlPlugin.HtmlWebpackPlugin
 let webpackConfig = merge(WebpackConf, {
   mode: 'production',
   entry: entryHtmlPlugin.entry,
+  devtool: config.build.productionSourceMap ? config.build.devtool : false,
   optimization: {
     runtimeChunk: {
       name: 'manifest'
     },
     minimizer: [
       new UglifyJsPlugin({
-        cache: true,
-        parallel: true,
-        sourceMap: true // set to true if you want JS source maps
+        uglifyOptions: {
+          compress: {
+            warnings: false
+          }
+        },
+        sourceMap: config.build.productionSourceMap,
+        parallel: true
       }),
       new OptimizeCSSAssetsPlugin({})
     ],
@@ -85,7 +90,7 @@ let webpackConfig = merge(WebpackConf, {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin(['dist'], { root: path.join(__dirname, '../') }),
+    // new CleanWebpackPlugin(['dist'], { root: path.join(__dirname, '../') }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].[hash:8].css',
       chunkFilename: 'css/[name].[hash:8].css'
@@ -99,5 +104,22 @@ let webpackConfig = merge(WebpackConf, {
     ...HTMLPlugins
   ]
 })
-
+if (config.build.productionGzip) {
+  const CompressionWebpackPlugin = require('compression-webpack-plugin')
+  const options = {
+    // asset: '[path].gz[query]',
+    algorithm: 'gzip',
+    test: new RegExp(
+      '\\.(' + config.build.productionGzipExtensions.join('|') + ')$'
+    ),
+    threshold: 10240,
+    minRatio: 0.8
+  }
+  webpackConfig.plugins.push(new CompressionWebpackPlugin(options))
+}
+if (config.build.bundleAnalyzerReport) {
+  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+    .BundleAnalyzerPlugin
+  webpackConfig.plugins.push(new BundleAnalyzerPlugin())
+}
 module.exports = webpackConfig

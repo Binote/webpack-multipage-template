@@ -63,7 +63,7 @@ function setMessage () {
       position: 'fixed',
       top: '5rem',
       left: '30%',
-      width: '40%',
+      width: '45%',
       height: '50px',
       border: '1px solid #000',
       'border-radius': '10px',

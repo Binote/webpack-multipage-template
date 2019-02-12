@@ -1,14 +1,19 @@
 const path = require('path')
+const utils = require('./utils')
 const config = require('../config')
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
+
 module.exports = {
-  context: path.resolve(__dirname, './'),
+  context: path.resolve(__dirname, '../'),
   output: {
-    path: path.resolve(__dirname, '../dist'),
+    path: config.build.assetsRoot,
     filename: 'js/[name].[hash:8].js',
-    publicPath: './',
+    publicPath:
+      process.env.NODE_ENV === 'production'
+        ? config.build.assetsPublicPath
+        : config.dev.assetsPublicPath,
     libraryTarget: 'umd'
   },
   resolve: {
@@ -19,6 +24,16 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+        loader: 'babel-loader',
+        include: [
+          resolve('src'),
+          resolve('test'),
+          resolve('node_modules/webpack-dev-server/client')
+        ]
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -38,7 +53,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: 'img/[name].[hash:7].[ext]'
+          name: utils.assetsPath('img/[name].[hash:7].[ext]')
         }
       },
       {
@@ -46,7 +61,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: 'media/[name].[hash:7].[ext]'
+          name: utils.assetsPath('media/[name].[hash:7].[ext]')
         }
       },
       {
@@ -54,7 +69,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: 'fonts/[name].[hash:7].[ext]'
+          name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
       }
     ]
