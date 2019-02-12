@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 /**
  * 映射 d 文件夹下的文件为模块
  */
-const mapDir = d => {
+const entryHtmlPlugin = d => {
   const tree = {
     entry: {},
     devHtmlWebpackPlugin: [],
@@ -19,7 +19,7 @@ const mapDir = d => {
 
   // 映射文件夹;
   // dirs.forEach(dir => {
-  //   tree[dir] = mapDir(path.join(d, dir));
+  //   tree[dir] = entryHtmlPlugin(path.join(d, dir));
   // });
   // console.log(files);
   dirs.forEach(dir => {
@@ -27,15 +27,15 @@ const mapDir = d => {
       fs.readdirSync(path.join(d, dir))
     ).partition(p => fs.statSync(path.join(d, dir, p)).isDirectory())
     pagesFiles.forEach(file => {
-      if (file === dir + '.js') {
+      if (file === 'index.js') {
         tree.entry[dir] = path.join(d, dir, file)
-      } else if (file === dir + '.html') {
+      } else if (file === 'index.html') {
         tree.HtmlWebpackPlugin.push(
           new HtmlWebpackPlugin({
-            filename: file,
+            filename: dir + '.html',
             template: path.join(d, dir, file),
             inject: true,
-            chunks: [dir],
+            chunks: [dir, 'commons', 'vendor', 'manifest'],
             inlineSource: '.(js|css)$',
             minify: {
               // 删除Html注释
@@ -50,7 +50,7 @@ const mapDir = d => {
         )
         tree.devHtmlWebpackPlugin.push(
           new HtmlWebpackPlugin({
-            filename: file,
+            filename: dir + '.html',
             template: path.join(d, dir, file),
             inject: true,
             chunks: [dir],
@@ -64,6 +64,6 @@ const mapDir = d => {
 
   return tree
 }
-// console.log(mapDir(path.join(__dirname, "../src/pages")));
+// console.log(entryHtmlPlugin(path.join(__dirname, '../src/pages')))
 // 默认导出当前文件夹下的映射
-module.exports = mapDir(path.join(__dirname, '../src/pages'))
+module.exports = entryHtmlPlugin(path.join(__dirname, '../src/pages'))

@@ -1,5 +1,8 @@
 const path = require('path')
-
+const config = require('../config')
+function resolve (dir) {
+  return path.join(__dirname, '..', dir)
+}
 module.exports = {
   context: path.resolve(__dirname, './'),
   output: {
@@ -7,6 +10,12 @@ module.exports = {
     filename: 'js/[name].[hash:8].js',
     publicPath: './',
     libraryTarget: 'umd'
+  },
+  resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      '@': resolve('src')
+    }
   },
   module: {
     rules: [
@@ -37,7 +46,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           limit: 10000,
-          name: utils.assetsPath('media/[name].[hash:7].[ext]')
+          name: 'media/[name].[hash:7].[ext]'
         }
       },
       {

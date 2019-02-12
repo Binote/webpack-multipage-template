@@ -1,34 +1,46 @@
 // const webpack = require('webpack')
 const merge = require('webpack-merge')
-// const path = require('path')
+const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // const HtmlWebpackPlugin = require("html-webpack-plugin");
 const autoprefixer = require('autoprefixer')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
-
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const WebpackConf = require('./webpack.base.conf')
-const mapDir = require('./config')
-const HTMLPlugins = mapDir.HtmlWebpackPlugin
-module.exports = merge(WebpackConf, {
-  entry: mapDir.entry,
+const entryHtmlPlugin = require('./entry-htmlPlugin')
+
+const HTMLPlugins = entryHtmlPlugin.HtmlWebpackPlugin
+let webpackConfig = merge(WebpackConf, {
+  mode: 'production',
+  entry: entryHtmlPlugin.entry,
   optimization: {
-    // runtimeChunk: {
-    //   name: 'manifest'
-    // },
+    runtimeChunk: {
+      name: 'manifest'
+    },
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true // set to true if you want JS source maps
+      }),
+      new OptimizeCSSAssetsPlugin({})
+    ],
     splitChunks: {
       chunks: 'all',
       cacheGroups: {
         vendor: {
-          test: /node_modules\//,
-          name: 'static/js/vendor',
-          priority: 10,
-          enforce: true
+          chunks: 'initial', // initial表示提取入口文件的公共部分
+          test: /node_modules/,
+          name: 'vendor',
+          priority: 10
+          // enforce: true
         },
         commons: {
-          test: /utils\//,
-          name: 'js/commons',
-          priority: 2,
-          enforce: true
+          chunks: 'initial', // initial表示提取入口文件的公共部分
+          minChunks: 2, // 表示提取公共部分最少的文件数
+          minSize: 0, // 表示提取公共部分最小的大小
+          name: 'commons' // 提取出来的文件命名
         }
       }
     }
@@ -36,22 +48,19 @@ module.exports = merge(WebpackConf, {
   module: {
     rules: [
       {
-        test: /\.(css|scss)$/,
+        test: /\.(sa|sc|c)ss$/,
         use: [
           {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: '../'
-            }
+            loader: MiniCssExtractPlugin.loader
           },
           {
-            loader: require.resolve('css-loader'),
+            loader: 'css-loader', // require.resolve('css-loader'),
             options: {
               importLoaders: 1
             }
           },
           {
-            loader: require.resolve('postcss-loader'),
+            loader: 'postcss-loader', // require.resolve('postcss-loader'),
             options: {
               ident: 'postcss',
               plugins: () => [
@@ -69,7 +78,7 @@ module.exports = merge(WebpackConf, {
             }
           },
           {
-            loader: require.resolve('sass-loader')
+            loader: 'sass-loader' // require.resolve('sass-loader')
           }
         ]
       }
@@ -81,6 +90,14 @@ module.exports = merge(WebpackConf, {
       filename: 'css/[name].[hash:8].css',
       chunkFilename: 'css/[name].[hash:8].css'
     }),
+    new OptimizeCSSAssetsPlugin({
+      assetNameRegExp: /\.css$/g, // 一个正则表达式，指示应优化\最小化的资产的名称。提供的正则表达式针对配置中ExtractTextPlugin实例导出的文件的文件名运行，而不是源CSS文件的文件名。默认为/\.css$/g
+      cssProcessor: require('cssnano'), // 用于优化\最小化CSS的CSS处理器，默认为cssnano。这应该是一个跟随cssnano.process接口的函数（接收CSS和选项参数并返回一个Promise）。
+      cssProcessorOptions: { safe: true, discardComments: { removeAll: true } }, // 传递给cssProcessor的选项，默认为{}
+      canPrint: true // 一个布尔值，指示插件是否可以将消息打印到控制台，默认为true
+    }),
     ...HTMLPlugins
   ]
 })
+
+module.exports = webpackConfig

@@ -5,10 +5,11 @@ const merge = require('webpack-merge')
 const autoprefixer = require('autoprefixer')
 
 const WebpackConf = require('./webpack.base.conf')
-const mapDir = require('./config')
-const HTMLPlugins = mapDir.devHtmlWebpackPlugin
+const entryHtmlPlugin = require('./entry-htmlPlugin')
+const HTMLPlugins = entryHtmlPlugin.devHtmlWebpackPlugin
 module.exports = merge(WebpackConf, {
-  entry: mapDir.entry,
+  mode: 'development',
+  entry: entryHtmlPlugin.entry,
   devServer: {
     clientLogLevel: 'warning',
     historyApiFallback: false,
@@ -35,19 +36,22 @@ module.exports = merge(WebpackConf, {
   module: {
     rules: [
       {
-        test: /\.(css|scss)$/,
+        test: /\.(sa|sc|c)ss$/,
         use: [
           {
-            loader: require.resolve('style-loader')
+            loader: 'style-loader', // require.resolve('style-loader')
+            options: {
+              insertAt: 'top'
+            }
           },
           {
-            loader: require.resolve('css-loader'),
+            loader: 'css-loader', // require.resolve('css-loader'),
             options: {
               importLoaders: 1
             }
           },
           {
-            loader: require.resolve('postcss-loader'),
+            loader: 'postcss-loader', // require.resolve('postcss-loader'),
             options: {
               ident: 'postcss',
               plugins: () => [
@@ -65,7 +69,7 @@ module.exports = merge(WebpackConf, {
             }
           },
           {
-            loader: require.resolve('sass-loader')
+            loader: 'sass-loader' // require.resolve('sass-loader')
           }
         ]
       }

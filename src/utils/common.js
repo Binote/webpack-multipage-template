@@ -1,7 +1,21 @@
 export const host = 'http://iep.sindrax.com/wechat'
 // export const host = 'http://121.199.73.102:8084'
-
-export const urlParser = (win) => {
+/**
+ * 获取Query参数
+ * @param {string} variable
+ */
+export const getQueryVariable = variable => {
+  var query = window.location.search.substring(1)
+  var vars = query.split('&')
+  for (var i = 0; i < vars.length; i++) {
+    var pair = vars[i].split('=')
+    if (pair[0] === variable) {
+      return pair[1]
+    }
+  }
+  return false
+}
+export const urlParser = win => {
   const location = win.location.search.substr(1)
   let url = {}
   let a = location.split('_')
@@ -11,14 +25,18 @@ export const urlParser = (win) => {
   })
   return url
 }
-
+/**
+ * 展示信息
+ * @param {string} str
+ * @param {function} callback
+ */
 export const showMessage = (str, callback) => {
   var neelerErrmsg = $('#neelerErrmsg')
   if (!neelerErrmsg.length) {
     setMessage()
     neelerErrmsg = $('#neelerErrmsg')
   }
-  if (!!window.neelerFlag) {
+  if (window.neelerFlag) {
     return
   }
   neelerErrmsg.text(str).fadeIn('slow', function () {
@@ -27,7 +45,7 @@ export const showMessage = (str, callback) => {
       neelerErrmsg.fadeOut('slow')
       window.neelerFlag = false
 
-      if (callback != undefined && callback != '') {
+      if (callback !== undefined && callback !== '') {
         setTimeout(function () {
           callback()
         }, 500)
@@ -36,14 +54,14 @@ export const showMessage = (str, callback) => {
   })
 }
 
-function setMessage() {
+function setMessage () {
   var neelerErrmsg = $('<div></div>')
     .attr('id', 'neelerErrmsg')
     .css({
       display: 'none',
-      fontSize: '18px',
+      fontSize: '0.3rem',
       position: 'fixed',
-      top: '100px',
+      top: '5rem',
       left: '30%',
       width: '40%',
       height: '50px',
@@ -65,11 +83,13 @@ export const wxConfig = () => {
   return new Promise((resolve, reject) => {
     $.ajax({
       type: 'GET',
-      url: 'http://offaccount.sindrax.com/platform/getJsTicket?url=' + window.location.href,
-      success: (res) => {
+      url:
+        'http://offaccount.sindrax.com/platform/getJsTicket?url=' +
+        window.location.href,
+      success: res => {
         resolve(res)
       },
-      error: (err) => {
+      error: err => {
         reject(err)
       }
     })
