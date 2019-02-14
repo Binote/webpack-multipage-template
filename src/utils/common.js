@@ -1,3 +1,4 @@
+import $ from 'jquery'
 export const host = 'http://iep.sindrax.com/wechat'
 // export const host = 'http://121.199.73.102:8084'
 /**

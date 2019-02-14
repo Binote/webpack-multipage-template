@@ -4,7 +4,16 @@ const config = require('../config')
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
-
+const createLintingRule = () => ({
+  test: /\.js$/,
+  loader: 'eslint-loader',
+  enforce: 'pre',
+  include: [resolve('src')],
+  options: {
+    formatter: require('eslint-friendly-formatter'),
+    emitWarning: !config.dev.showEslintErrorsInOverlay
+  }
+})
 module.exports = {
   context: path.resolve(__dirname, '../'),
   output: {
@@ -22,8 +31,13 @@ module.exports = {
       '@': resolve('src')
     }
   },
+  // cdn模块引入忽略
+  externals: {
+    jquery: 'jQuery'
+  },
   module: {
     rules: [
+      ...(config.dev.useEslint ? [createLintingRule()] : []),
       {
         test: /\.js$/,
         enforce: 'pre',

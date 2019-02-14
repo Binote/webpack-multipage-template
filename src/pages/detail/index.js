@@ -1,3 +1,4 @@
+import $ from 'jquery'
 import '@/utils/reset.scss'
 import './index.scss'
 import flexible from '@/utils/flexible'

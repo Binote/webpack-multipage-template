@@ -1,6 +1,12 @@
 'use strict'
 const path = require('path')
 module.exports = {
+  // webserver port
+  webserver: {
+    port: 8788,
+    env: 'development',
+    debug: true
+  },
   dev: {
     // Paths
     assetsSubDirectory: 'static',

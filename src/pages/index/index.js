@@ -1,11 +1,10 @@
+import _ from 'lodash'
+import $ from 'jquery'
 import '@/utils/reset.scss'
-// import '@/lib/modal.css'
-// import '@/lib/modal.js'
 import './index.scss'
 import flexible from '@/utils/flexible'
 import { api, qiniuRoot } from '@/config'
 import { showMessage, getQueryVariable } from '@/utils/common'
-import _ from 'lodash'
 let redpacketObj
 
 let memberNum = getQueryVariable('memberNum')
