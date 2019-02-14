@@ -27,9 +27,9 @@ const entryHtmlPlugin = d => {
       fs.readdirSync(path.join(d, dir))
     ).partition(p => fs.statSync(path.join(d, dir, p)).isDirectory())
     pagesFiles.forEach(file => {
-      if (file === 'index.js') {
+      if (file === 'index.js' || file === dir + '.js') {
         tree.entry[dir] = path.join(d, dir, file)
-      } else if (file === 'index.html') {
+      } else if (file === 'index.html' || file === dir + '.html') {
         tree.HtmlWebpackPlugin.push(
           new HtmlWebpackPlugin({
             filename: dir + '.html',

@@ -2,6 +2,8 @@
 
 > A webpack multipage template project
 
+### 开箱即用的 webpack 多页面项目模板
+
 ## 项目初始化
 
 ```bash
@@ -18,7 +20,9 @@ yarn run build
 yarn run git
 ```
 
-### pages 下面需要建立页面包，页面为包下同名的 html 文件，入口为同名的 js 文件，css 在 js 中引用
+### pages 下面需要建立页面包，页面为包下 index.html 或者包名.html 文件，入口为 idnex.js 或者包名.js 文件，css 在 js 中引用
+
+> 主文件为 index 或者包名任选一个，不能同时出现
 
 ### 目录结构
 
