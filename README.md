@@ -18,6 +18,16 @@ yarn run build
 
 # 允许交互式git脚本，规范git提交
 yarn run git
+
+# 启用koa静态服务器
+yarn run start
+
+# eslint代码验证
+yarn run lint
+
+# eslint代码验证并修复
+yarn run lint:fix
+
 ```
 
 ### pages 下面需要建立页面包，页面为包下 index.html 或者包名.html 文件，入口为 idnex.js 或者包名.js 文件，css 在 js 中引用

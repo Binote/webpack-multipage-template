@@ -10,6 +10,7 @@
     "dev": "webpack-dev-server --hot --config build/webpack.dev.conf.js",
     "git": "node scripts/git-commit",
     "lint": "eslint --ext .js src",
+    "lint:fix": "eslint --fix --ext .js src",
     "start": "node scripts/webserver"
   },
   "devDependencies": {
