@@ -24,6 +24,7 @@ module.exports = {
     // Use Eslint Loader?
     // If true, your code will be linted during bundling and
     // linting errors and warnings will be shown in the console.
+    // eslint-loader不读取.eslintrc的配置，暂时不能用
     useEslint: false,
     // If true, eslint errors and warnings will also be shown in the error overlay
     // in the browser.
