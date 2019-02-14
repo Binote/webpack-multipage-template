@@ -28,7 +28,7 @@ yarn run git
 
 ```
 ├── README.md
-├── build  # webpack打包配置文件目录
+├── build  // webpack打包配置文件目录
 │   └── build.js // webpack打包脚本
 │   └── entry-htmlPlugin.js // webpack多入口爬虫脚本
 │   └── utils.js // webpack工具文件
