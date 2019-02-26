@@ -26,7 +26,7 @@ module.exports = {
     libraryTarget: 'umd'
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
+    extensions: ['.js', '.scss', '.css', '.json'],
     alias: {
       '@': resolve('src')
     }
