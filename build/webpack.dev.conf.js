@@ -1,6 +1,6 @@
 const webpack = require('webpack')
 const merge = require('webpack-merge')
-// const path = require("path");
+const vConsolePlugin = require('vconsole-webpack-plugin')
 const autoprefixer = require('autoprefixer')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const config = require('../config')
@@ -78,7 +78,14 @@ const devWebpackConfig = merge(WebpackConf, {
       }
     ]
   },
-  plugins: [new webpack.HotModuleReplacementPlugin(), ...HTMLPlugins]
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new vConsolePlugin({
+      filter: [], // 需要过滤的入口文件
+      enable: config.dev.vconsole // 发布代码前记得改回 false
+    }),
+    ...HTMLPlugins
+  ]
 })
 module.exports = new Promise((resolve, reject) => {
   portfinder.basePort = process.env.PORT || config.dev.port

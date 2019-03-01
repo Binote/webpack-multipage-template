@@ -7561,6 +7561,18 @@ vary@^1.1.2, vary@~1.1.2:
   resolved "http://registry.npm.taobao.org/vary/download/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
+vconsole-webpack-plugin@^1.4.2:
+  version "1.4.2"
+  resolved "http://registry.npm.taobao.org/vconsole-webpack-plugin/download/vconsole-webpack-plugin-1.4.2.tgz#838346f70dc68c0dbd0c85ef88e625575f2b9a2d"
+  integrity sha1-g4NG9w3GjA29DIXviOYlV18rmi0=
+  dependencies:
+    vconsole "^3.1.0"
+
+vconsole@^3.1.0:
+  version "3.3.0"
+  resolved "http://registry.npm.taobao.org/vconsole/download/vconsole-3.3.0.tgz#42629c07fb3b6a72733d2bbc417ee3e84b2bc76e"
+  integrity sha1-QmKcB/s7anJzPSu8QX7j6Esrx24=
+
 vendors@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/vendors/-/vendors-1.0.2.tgz#7fcb5eef9f5623b156bcea89ec37d63676f21801"
