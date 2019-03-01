@@ -22,6 +22,9 @@ yarn run git
 # 启用koa静态服务器
 yarn run start
 
+# 新增页面模板
+yarn run newpage
+
 # eslint代码验证
 yarn run lint
 
