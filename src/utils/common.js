@@ -1,6 +1,4 @@
 import $ from 'jquery'
-export const host = 'http://iep.sindrax.com/wechat'
-// export const host = 'http://121.199.73.102:8084'
 /**
  * 获取Query参数
  * @param {string} variable
@@ -16,16 +14,7 @@ export const getQueryVariable = variable => {
   }
   return false
 }
-export const urlParser = win => {
-  const location = win.location.search.substr(1)
-  let url = {}
-  let a = location.split('_')
-  a.forEach(item => {
-    const b = item.split('=')
-    url[b[0]] = b[1]
-  })
-  return url
-}
+
 /**
  * 展示信息
  * @param {string} str
@@ -77,22 +66,4 @@ function setMessage () {
       'z-index': '999999'
     })
   $('body').prepend(neelerErrmsg)
-}
-
-// 微信设置
-export const wxConfig = () => {
-  return new Promise((resolve, reject) => {
-    $.ajax({
-      type: 'GET',
-      url:
-        'http://offaccount.sindrax.com/platform/getJsTicket?url=' +
-        window.location.href,
-      success: res => {
-        resolve(res)
-      },
-      error: err => {
-        reject(err)
-      }
-    })
-  })
 }
