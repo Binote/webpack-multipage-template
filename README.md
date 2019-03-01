@@ -54,12 +54,15 @@ yarn run lint:fix
 │   └── config // 脚本配置信息
 │   └── git-commit.js // git交互式规范提交脚本
 │   └── webserver.js // koa静态服务器脚本
+│   └── newpage.js // 新增页面模板脚本
 ├── src
 │   └── config // 页面全局配置信息
 │   └── lib // 第三方工具
 │   └── pages // 页面目录
 │   └── static // 静态资源目录
 │   └── utils // 自定义工具库
+├── utils //自定义node工具库
+│   └── fs // promise版fs
 ├── .babelrc // babel配置文件
 ├── .eslintignore // eslint忽略
 ├── .eslintrc // eslint配置文件
