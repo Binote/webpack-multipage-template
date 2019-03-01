@@ -7,6 +7,15 @@
 ## 项目初始化
 
 ```bash
+# 克隆项目
+git clone git@github.com:Binote/webpack-multipage-template.git
+
+#删除远程源
+git remote rm origin
+
+#增加自己的仓库地址
+git remote add origin https://USERNAME:PASSWORD@github.com/USERNAME/pro.git
+
 # 安装依赖
 yarn install
 
